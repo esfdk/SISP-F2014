@@ -42,7 +42,7 @@ public class MiniMax
 		}
 
 		int v = Integer.MIN_VALUE;
-		int np = nextPlayer(playerID);
+		int np = HelperClass.nextPlayer(playerID);
 		
 		List<Integer> actions = HelperClass.Actions(board);
 		
@@ -72,7 +72,7 @@ public class MiniMax
 		}
 
 		int v = Integer.MAX_VALUE;
-		int np = nextPlayer(playerID);
+		int np = HelperClass.nextPlayer(playerID);
 		
 		List<Integer> actions = HelperClass.Actions(board);
 		
@@ -84,21 +84,5 @@ public class MiniMax
 		}
 
 		return v;
-	}
-
-	/**
-	 * The playerID of the next player.
-	 * 
-	 * @param playerID The ID of the current player.
-	 * @return The ID of the next player.
-	 */
-	private static int nextPlayer(int playerID)
-	{
-		switch(playerID)
-		{
-			case 1: return 2;
-			case 2: return 1;
-			default: return 0;
-		}	
 	}
 }

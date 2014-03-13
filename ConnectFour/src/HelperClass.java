@@ -66,4 +66,20 @@ public class HelperClass
 		}
 		return boardClone;
 	}
+	
+	/**
+	 * The playerID of the next player.
+	 * 
+	 * @param playerID The ID of the current player.
+	 * @return The ID of the next player.
+	 */
+	public static int nextPlayer(int playerID)
+	{
+		switch(playerID)
+		{
+			case 1: return 2;
+			case 2: return 1;
+			default: return 0;
+		}	
+	}
 }

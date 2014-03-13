@@ -2,6 +2,8 @@ import java.util.List;
 
 public class MiniMax 
 {	
+	private static int player;
+	
 	/**
 	 * Evaluates the game board and estimates the best move to make with the current board state.
 	 * 
@@ -12,6 +14,8 @@ public class MiniMax
 	 */
 	public static int MiniMaxDecision(int[][] board, int cutoff, int playerID)
 	{
+		player = playerID;
+		
 		int decision = 0;
 		int decisionValue = Integer.MIN_VALUE;
 
@@ -38,7 +42,7 @@ public class MiniMax
 	{
 		if(cutoff == 0)
 		{
-			return HelperClass.Eval(board, playerID);
+			return HelperClass.Eval(board, player);
 		}
 
 		int v = Integer.MIN_VALUE;
@@ -46,7 +50,7 @@ public class MiniMax
 		
 		List<Integer> actions = HelperClass.Actions(board);
 		
-		if(actions.size() == 0) return HelperClass.Eval(board, playerID);
+		if(actions.size() == 0) return HelperClass.Eval(board, player);
 		
 		for(int a : actions)
 		{
@@ -68,7 +72,7 @@ public class MiniMax
 	{
 		if(cutoff == 0)
 		{
-			return HelperClass.Eval(board, playerID);
+			return HelperClass.Eval(board, player);
 		}
 
 		int v = Integer.MAX_VALUE;
@@ -76,7 +80,7 @@ public class MiniMax
 		
 		List<Integer> actions = HelperClass.Actions(board);
 		
-		if(actions.size() == 0) return HelperClass.Eval(board, playerID);
+		if(actions.size() == 0) return HelperClass.Eval(board, player);
 
 		for(int a : actions)
 		{

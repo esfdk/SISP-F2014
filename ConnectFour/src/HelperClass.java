@@ -80,7 +80,7 @@ public class HelperClass
 					}
 					else if(InsideBoardBounds(cols - 3, rows, board))
 					{
-						if(!PossibleLine(cols, rows, -1, 0, board, playerID))
+						if(PossibleLine(cols, rows, -1, 0, board, playerID))
 						{
 							singlePointGiven[cols][rows] = 1;
 							tempResult += hOne;

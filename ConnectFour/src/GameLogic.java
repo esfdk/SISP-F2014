@@ -14,7 +14,7 @@ public class GameLogic implements IGameLogic
 
 	public void initializeGame(int x, int y, int playerID) 
 	{
-		this.cutoff = 0;
+		this.cutoff = 3;
 		this.sizeX = x;
 		this.sizeY = y;
 		this.playerID = playerID;

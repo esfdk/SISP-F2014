@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class HelperClass 
+public class GroossMelnykHelperClass 
 {
 	private static int hThree = 9, hTwo = 3, hOne = 1;
 	private static int maxValue = Integer.MAX_VALUE - 1;

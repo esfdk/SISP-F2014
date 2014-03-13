@@ -1,4 +1,4 @@
-public class GameLogic implements IGameLogic 
+public class GroossMelnykGameLogic implements IGameLogic 
 {
 	private static int cutoff;
 	private int sizeX = 0;
@@ -8,13 +8,13 @@ public class GameLogic implements IGameLogic
 	private int emptySlots;
 	private int[][] board;
 
-	public GameLogic() 
+	public GroossMelnykGameLogic() 
 	{
 	}
 
 	public void initializeGame(int x, int y, int playerID) 
 	{
-		this.cutoff = 3;
+		cutoff = 3;
 		this.sizeX = x;
 		this.sizeY = y;
 		this.playerID = playerID;
@@ -94,6 +94,6 @@ public class GameLogic implements IGameLogic
 
 	public int decideNextMove() 
 	{
-		return MiniMax.MiniMaxDecision(board, cutoff, playerID);
+		return GroossMelnykMiniMax.MiniMaxDecision(board, cutoff, playerID);
 	}
 }

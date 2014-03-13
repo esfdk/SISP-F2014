@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class MiniMax 
+public class GroossMelnykMiniMax 
 {	
 	private static int player;
 	
@@ -19,11 +19,11 @@ public class MiniMax
 		int decision = 0;
 		int decisionValue = Integer.MIN_VALUE;
 		
-		List<Integer> actions = HelperClass.Actions(board);
+		List<Integer> actions = GroossMelnykHelperClass.Actions(board);
 		
 		for(int a : actions)
 		{
-			int tempValue = MinValue(HelperClass.Result(board, a, playerID), cutoff, HelperClass.NextPlayer(playerID));
+			int tempValue = MinValue(GroossMelnykHelperClass.Result(board, a, playerID), cutoff, GroossMelnykHelperClass.NextPlayer(playerID));
 			if (tempValue >= decisionValue)
 			{
 				decision = a;
@@ -46,17 +46,17 @@ public class MiniMax
 	{
 		if(cutoff == 0)
 		{
-			return HelperClass.Eval(board, player);
+			return GroossMelnykHelperClass.Eval(board, player);
 		}
 
 		int v = Integer.MIN_VALUE;
-		int np = HelperClass.NextPlayer(playerID);
+		int np = GroossMelnykHelperClass.NextPlayer(playerID);
 		
-		List<Integer> actions = HelperClass.Actions(board);
+		List<Integer> actions = GroossMelnykHelperClass.Actions(board);
 		
 		for(int a : actions)
 		{
-			v = Math.max(v, MinValue(HelperClass.Result(board, a, playerID), cutoff - 1, np));
+			v = Math.max(v, MinValue(GroossMelnykHelperClass.Result(board, a, playerID), cutoff - 1, np));
 		}
 
 		return v;
@@ -74,17 +74,17 @@ public class MiniMax
 	{
 		if(cutoff == 0)
 		{
-			return HelperClass.Eval(board, player);
+			return GroossMelnykHelperClass.Eval(board, player);
 		}
 
 		int v = Integer.MAX_VALUE;
-		int np = HelperClass.NextPlayer(playerID);
+		int np = GroossMelnykHelperClass.NextPlayer(playerID);
 		
-		List<Integer> actions = HelperClass.Actions(board);
+		List<Integer> actions = GroossMelnykHelperClass.Actions(board);
 		
 		for(int a : actions)
 		{
-			v = Math.min(v, MaxValue(HelperClass.Result(board, a, playerID), cutoff - 1, np));
+			v = Math.min(v, MaxValue(GroossMelnykHelperClass.Result(board, a, playerID), cutoff - 1, np));
 		}
 
 		return v;

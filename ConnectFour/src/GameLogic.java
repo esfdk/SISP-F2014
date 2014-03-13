@@ -14,7 +14,7 @@ public class GameLogic implements IGameLogic
 
 	public void initializeGame(int x, int y, int playerID) 
 	{
-		this.cutoff = 50;
+		this.cutoff = 0;
 		this.sizeX = x;
 		this.sizeY = y;
 		this.playerID = playerID;
@@ -34,7 +34,6 @@ public class GameLogic implements IGameLogic
 
 					if (i + 3 < sizeX) 
 					{
-						System.out.println("right");
 						if (board[i + 1][j] == p && board[i + 2][j] == p
 								&& board[i + 3][j] == p)
 							return whoWon(p);
@@ -42,7 +41,6 @@ public class GameLogic implements IGameLogic
 
 					if (j + 3 < sizeY) 
 					{
-						System.out.println("left");
 						if (board[i][j + 1] == p && board[i][j + 2] == p
 								&& board[i][j + 3] == p)
 							return whoWon(p);
@@ -50,7 +48,6 @@ public class GameLogic implements IGameLogic
 
 					if (i + 3 < sizeX && j + 3 < sizeY) 
 					{
-						System.out.println("upright");
 						if (board[i + 1][j + 1] == p
 								&& board[i + 2][j + 2] == p
 								&& board[i + 3][j + 3] == p)
@@ -59,7 +56,6 @@ public class GameLogic implements IGameLogic
 
 					if (i - 3 >= 0 && j + 3 < sizeY) 
 					{
-						System.out.println("upleft");
 						if (board[i - 1][j + 1] == p
 								&& board[i - 2][j + 2] == p
 								&& board[i - 3][j + 3] == p)
@@ -99,9 +95,9 @@ public class GameLogic implements IGameLogic
 	public int decideNextMove() 
 	{
 		// TODO: If trying to put into full column, then put into next available column
-		//return MiniMax.MiniMaxDecision(board, cutoff, );  
+		return MiniMax.MiniMaxDecision(board, cutoff, playerID);  
 
-		for (int j = 0; j < sizeX; j++) 
+		/*for (int j = 0; j < sizeX; j++) 
 		{
 			for (int i = 0; i < sizeY; i++) 
 			{
@@ -111,6 +107,6 @@ public class GameLogic implements IGameLogic
 				}
 			}
 		}
-		return 0;
+		return 0;*/
 	}
 }

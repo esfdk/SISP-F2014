@@ -5,36 +5,51 @@ public class HelperClass
 {
 	private static int hThree = 9, hTwo = 3, hOne = 1;
 	
+	private static int[][] singlePointGiven;
+
 	public static int Eval(int[][] board, int player)
 	{		
+		for(int i = board[0].length - 1; i >= 0; i--)
+		{
+			for(int j = 0; j < board.length; j++)
+			{
+				System.out.print(board[j][i]);
+			}
+			System.out.print("\n");
+		}
+		
+		singlePointGiven = new int[board.length][board[0].length];
+
 		int eH = EvalHorizontal(board, player);
 		if (eH == Integer.MAX_VALUE - 1 || eH == Integer.MIN_VALUE + 1) return eH;
-		
+
 		int eV = EvalVertical(board, player);
 		if (eV == Integer.MAX_VALUE - 1 || eV == Integer.MIN_VALUE + 1) return eV;
-		
+
 		int eDL = EvalDiagonalLeft(board, player);
 		if (eDL == Integer.MAX_VALUE - 1 || eDL == Integer.MIN_VALUE + 1) return eDL;
-		
+
 		int eDR = EvalDiagonalRight(board, player);
 		if (eDR == Integer.MAX_VALUE - 1 || eDR == Integer.MIN_VALUE + 1) return eDR;
-		
+
+		System.out.println(eH + " + " + eV + " + " + eDL + " + " + eDR + " = " + (eH + eV + eDL + eDR));
+		System.out.println();
 		return (eH + eV + eDL + eDR);
 	}
-	
+
 	private static int EvalHorizontal(int[][] board, int playerID)
 	{
 		int result = 0;
-		int nextPlayer = nextPlayer(playerID);
-		
+		int nextPlayer = NextPlayer(playerID);
+
 		for (int rows = 0; rows < board[0].length; rows++)
 		{
 			for (int cols = 0; cols < board.length; cols++)
 			{
 				int tempResult = 0;
-				
+
 				if (board[cols][rows] == playerID)
-				{
+				{		
 					if (InsideBoardBounds(cols + 3, rows, board))
 					{
 						if (PossibleLine(cols, rows, 1, 0, board, playerID))
@@ -58,12 +73,17 @@ public class HelperClass
 							}
 							else
 							{
+								singlePointGiven[cols][rows] = 1;
 								tempResult += hOne;
 							}
 						}
-						else
+					}
+					else if(InsideBoardBounds(cols - 3, rows, board))
+					{
+						if(!PossibleLine(cols, rows, -1, 0, board, playerID))
 						{
-							tempResult += 0;
+							singlePointGiven[cols][rows] = 1;
+							tempResult += hOne;
 						}
 					}
 				}
@@ -92,34 +112,40 @@ public class HelperClass
 							}
 							else
 							{
+								singlePointGiven[cols][rows] = 1;
 								tempResult -= hOne;
 							}
 						}
-						else
+
+					}
+					else if(InsideBoardBounds(cols - 3, rows, board))
+					{
+						if(PossibleLine(cols, rows, -1, 0, board, nextPlayer))
 						{
-							tempResult += 0;
+							singlePointGiven[cols][rows] = 1;
+							tempResult -= hOne;
 						}
 					}
 				}
-				
+
 				result += tempResult;
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	private static int EvalVertical(int[][] board, int playerID)
 	{
 		int result = 0;
-		int nextPlayer = nextPlayer(playerID);
-		
+		int nextPlayer = NextPlayer(playerID);
+
 		for (int cols = 0; cols < board.length; cols++)
 		{
 			for (int rows = 0; rows < board[0].length; rows++)
 			{
 				int tempResult = 0;
-				
+
 				if (board[cols][rows] == playerID)
 				{
 					if (InsideBoardBounds(cols, rows + 3, board))
@@ -145,12 +171,12 @@ public class HelperClass
 							}
 							else
 							{
-								tempResult += hOne;
+								if(singlePointGiven[cols][rows] == 0)
+								{
+									tempResult += hOne;
+									singlePointGiven[cols][rows] = 1;
+								}
 							}
-						}
-						else
-						{
-							tempResult += 0;
 						}
 					}
 				}
@@ -179,42 +205,42 @@ public class HelperClass
 							}
 							else
 							{
-								tempResult -= hOne;
+								if(singlePointGiven[cols][rows] == 0)
+								{
+									tempResult -= hOne;
+									singlePointGiven[cols][rows] = 1;
+								}
 							}
-						}
-						else
-						{
-							tempResult += 0;
 						}
 					}
 				}
-				
+
 				result += tempResult;
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	private static int EvalDiagonalLeft(int[][] board, int playerID)
 	{
 		int result = 0;
-		int nextPlayer = nextPlayer(playerID);
+		int nextPlayer = NextPlayer(playerID);
 		int[][] visitedPoints = new int[board.length][board[0].length];
-		
+
 		for (int rows = 0; rows < board[0].length; rows++)
 		{
 			for (int cols = 0; cols < board.length; cols++)
 			{
 				int tempResult = 0;
-				
+
 				if (visitedPoints[cols][rows] == 1)
 				{
 					continue;
 				}
-				
+
 				visitedPoints[cols][rows] = 1;
-				
+
 				if (board[cols][rows] == playerID)
 				{
 					if (InsideBoardBounds(cols - 3, rows + 3, board))
@@ -241,12 +267,12 @@ public class HelperClass
 							}
 							else
 							{
-								tempResult += hOne;
+								if(singlePointGiven[cols][rows] == 0)
+								{
+									tempResult += hOne;
+									singlePointGiven[cols][rows] = 1;
+								}
 							}
-						}
-						else
-						{
-							tempResult += 0;
 						}
 					}
 				}
@@ -276,42 +302,42 @@ public class HelperClass
 							}
 							else
 							{
-								tempResult -= hOne;
+								if(singlePointGiven[cols][rows] == 0)
+								{
+									tempResult -= hOne;
+									singlePointGiven[cols][rows] = 1;
+								}
 							}
-						}
-						else
-						{
-							tempResult += 0;
 						}
 					}
 				}
-				
+
 				result += tempResult;
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	private static int EvalDiagonalRight(int[][] board, int playerID)
 	{
 		int result = 0;
-		int nextPlayer = nextPlayer(playerID);
+		int nextPlayer = NextPlayer(playerID);
 		int[][] visitedPoints = new int[board.length][board[0].length];
-		
+
 		for (int rows = 0; rows < board[0].length; rows++)
 		{
 			for (int cols = 0; cols < board.length; cols++)
 			{
 				int tempResult = 0;
-				
+
 				if (visitedPoints[cols][rows] == 1)
 				{
 					continue;
 				}
-				
+
 				visitedPoints[cols][rows] = 1;
-				
+
 				if (board[cols][rows] == playerID)
 				{
 					if (InsideBoardBounds(cols + 3, rows + 3, board))
@@ -338,12 +364,12 @@ public class HelperClass
 							}
 							else
 							{
-								tempResult += hOne;
+								if(singlePointGiven[cols][rows] == 0)
+								{
+									tempResult += hOne;
+									singlePointGiven[cols][rows] = 1;
+								}
 							}
-						}
-						else
-						{
-							tempResult += 0;
 						}
 					}
 				}
@@ -373,23 +399,23 @@ public class HelperClass
 							}
 							else
 							{
-								tempResult -= hOne;
+								if(singlePointGiven[cols][rows] == 0)
+								{
+									tempResult -= hOne;
+									singlePointGiven[cols][rows] = 1;
+								}
 							}
-						}
-						else
-						{
-							tempResult += 0;
 						}
 					}
 				}
-				
+
 				result += tempResult;
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * Checks if the given coordinates are inside the board bounds.
 	 * 
@@ -400,12 +426,12 @@ public class HelperClass
 	 */
 	private static boolean InsideBoardBounds(int col, int row, int[][] board)
 	{
-		if (col > board.length || col < 0) return false;
-		if (row > board[0].length || row < 0) return false;
-		
+		if (col >= board.length || col < 0) return false;
+		if (row >= board[0].length || row < 0) return false;
+
 		return true;
 	}
-	
+
 	/**
 	 * Checks if the given line can result in 4-in-a-row.
 	 * 
@@ -421,9 +447,9 @@ public class HelperClass
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			if (board[currCol + (i * colChange)][currRow + (i * rowChange)] == nextPlayer(playerID)) return false;
+			if (board[currCol + (i * colChange)][currRow + (i * rowChange)] == NextPlayer(playerID)) return false;
 		}
-		
+
 		return true;
 	}
 
@@ -435,7 +461,7 @@ public class HelperClass
 	public static List<Integer> Actions(int[][] board)
 	{
 		List<Integer> actions = new ArrayList<Integer>();
-		
+
 		for(int i = 0; i < board.length; i++)
 		{
 			if(board[i][0] == 0)
@@ -443,7 +469,7 @@ public class HelperClass
 				actions.add(i);
 			}
 		}
-		
+
 		return actions;
 	}
 
@@ -458,11 +484,12 @@ public class HelperClass
 	{
 		int[][] result = copyBoard(board);
 
-		for (int i = 0; i < result.length; i++) 
+		for (int i = 0; i < result[column].length; i++) 
 		{
 			if(result[column][i] == 0)
 			{
-				result[column][i] = playerID;	
+				result[column][i] = playerID;
+				return result;
 			}
 		}
 
@@ -484,20 +511,20 @@ public class HelperClass
 		}
 		return boardClone;
 	}
-	
+
 	/**
 	 * The playerID of the next player.
 	 * 
 	 * @param playerID The ID of the current player.
 	 * @return The ID of the next player.
 	 */
-	public static int nextPlayer(int playerID)
+	public static int NextPlayer(int playerID)
 	{
 		switch(playerID)
 		{
-			case 1: return 2;
-			case 2: return 1;
-			default: return 0;
+		case 1: return 2;
+		case 2: return 1;
+		default: return 0;
 		}	
 	}
 }

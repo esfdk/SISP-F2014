@@ -21,9 +21,11 @@ public class MiniMax
 
 		for(int i = 0; i < board.length; i++)
 		{
-			if(MinValue(HelperClass.Result(board, i, playerID), cutoff, playerID) >= decisionValue)
+			int tempValue = MinValue(HelperClass.Result(board, i, playerID), cutoff, HelperClass.NextPlayer(playerID));
+			if(tempValue >= decisionValue)
 			{
 				decision = i;
+				decisionValue = tempValue; 
 			}
 		}
 
@@ -46,11 +48,9 @@ public class MiniMax
 		}
 
 		int v = Integer.MIN_VALUE;
-		int np = HelperClass.nextPlayer(playerID);
+		int np = HelperClass.NextPlayer(playerID);
 		
 		List<Integer> actions = HelperClass.Actions(board);
-		
-		if(actions.size() == 0) return HelperClass.Eval(board, player);
 		
 		for(int a : actions)
 		{
@@ -76,15 +76,13 @@ public class MiniMax
 		}
 
 		int v = Integer.MAX_VALUE;
-		int np = HelperClass.nextPlayer(playerID);
+		int np = HelperClass.NextPlayer(playerID);
 		
 		List<Integer> actions = HelperClass.Actions(board);
-		
-		if(actions.size() == 0) return HelperClass.Eval(board, player);
 
 		for(int a : actions)
 		{
-			v = Math.min(v, MaxValue(HelperClass.Result(board, a, np), cutoff - 1, np));
+			v = Math.min(v, MaxValue(HelperClass.Result(board, a, playerID), cutoff - 1, np));
 		}
 
 		return v;

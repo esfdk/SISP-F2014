@@ -10,11 +10,11 @@ public class GameLogic implements IGameLogic
 
 	public GameLogic() 
 	{
-		// TODO Implement constructor
 	}
 
 	public void initializeGame(int x, int y, int playerID) 
 	{
+		this.cutoff = 50;
 		this.sizeX = x;
 		this.sizeY = y;
 		this.playerID = playerID;
@@ -22,7 +22,7 @@ public class GameLogic implements IGameLogic
 		emptySlots = sizeX * sizeY;
 		// TODO Implement init game
 	}
-
+	
 	public Winner gameFinished() 
 	{
 		for (int i = 0; i < sizeX; i++) {
@@ -89,7 +89,7 @@ public class GameLogic implements IGameLogic
 			}
 		}
 	}
-
+	
 	public int decideNextMove() 
 	{
 		//return MiniMax.MiniMaxDecision(board);  

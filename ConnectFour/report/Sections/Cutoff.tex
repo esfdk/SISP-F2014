@@ -1,6 +1,6 @@
 \section{Cut-off}
 \label{Cutoff}
-As mentioned in section \ref{Our_Version}, we use a cut-off test to reduce the amount of time taken for the AI to decide on a move. A higher cut-off depth allows for more correct evaluation of the moves being considered. The expense of the higher cut-off depth is the time it takes for the algorithm to finish evaluation of all reachable board states. Because of the high branching factor (7), the cut-off depth needs to be low in order for the AI to decide within a "reasonable" time frame.
+As mentioned in section\ref{Our_Version}, we use a cut-off test to reduce the amount of time taken for the AI to decide on a move. A higher cut-off depth allows for more correct evaluation of the moves being considered. The expense of the higher cut-off depth is the time it takes for the algorithm to finish evaluation of all reachable board states. Because of the high branching factor (7), the cut-off depth needs to be low in order for the AI to decide within a "reasonable" time frame.
 
 Alpha-beta-pruning could have improved the algorithm by not considering branches that would never influence the final decision. In the best case scenario, implementing alpha-beta-pruning could let us roughly double the cut-off depth\footnote{Russell, S. and Norvig, P., "Artificial Intelligence. A Modern Approach", Third Edition (New International Edition), Pearson, ISBN 13 978-1-292-02420-2, Aug, 2013., p. 172} while taking the same amount of time to decide on a move.
 

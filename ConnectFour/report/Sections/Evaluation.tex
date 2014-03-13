@@ -1,2 +1,21 @@
 \section{Evaluation function}
-Our evaluation of the board state is determined by the number of \textit{n} out of 4 in a row. If a player has 4-in-a-row on the board, the evaluation function returns Integer.max 
+
+To make the AI play intelligently, it needed a way to evaluate the different moves and compare them to each other. This evaluation is an estimate of how good a move is, based on subsequent moves. 
+
+Our evaluation of the board state is determined by the number of \textit{n}-out-of-4 a player has in a row. When the function encounters a coin belonging to a player, it will check how long the row is. It will first check for 4-in-a-row, then check for \textit{n-1} and keep going until it reaches 1-in-a-row. The first type of row that is encountered takes priority. Thus, a 3-in-a-row is not also a 2-in-a-row and a 1-in-a-row.
+
+The function will count horizontal rows, vertical rows and diagonal rows and add their values together. Depending on how many \textit{n} there are in a row, the row is worth different values. This value grows exponentially (with the exception of 4-in-a-row, the winning state), as the closer you are to winning, the better the row is:
+
+\begin{my_itemize}
+
+	\item \textbf{4-in-a-row} - This is a winning move, and as such has a high value (the maximum value an integer can hold minus one, actually). This way, a winning move is never overridden by a non-winning move.
+
+	\item \textbf{3-in-a-row} - 3-in-a-row is worth 9 points.
+
+	\item \textbf{2-in-a-row} - 2-in-a-row is worth 3 points.
+
+	\item \textbf{1-in-a-row} - 1-in-a-row is worth 1 point.
+
+\end{my_itemize}
+
+In the case the evaluation function finds a 4-in-a-row, it will stop all subsequent counting and immediately return the value of the 4-in-a-row. If the game is won, there is no point in figuring out what the value of the board is, the game is over.

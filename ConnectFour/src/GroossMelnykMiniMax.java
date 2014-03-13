@@ -3,7 +3,7 @@ import java.util.List;
 public class GroossMelnykMiniMax 
 {	
 	private static int player;
-	
+
 	/**
 	 * Evaluates the game board and estimates the best move to make with the current board state.
 	 * 
@@ -15,12 +15,12 @@ public class GroossMelnykMiniMax
 	public static int MiniMaxDecision(int[][] board, int cutoff, int playerID)
 	{
 		player = playerID;
-		
+
 		int decision = 0;
 		int decisionValue = Integer.MIN_VALUE;
-		
+
 		List<Integer> actions = GroossMelnykHelperClass.Actions(board);
-		
+
 		for(int a : actions)
 		{
 			int tempValue = MinValue(GroossMelnykHelperClass.Result(board, a, playerID), cutoff, GroossMelnykHelperClass.NextPlayer(playerID));
@@ -44,16 +44,16 @@ public class GroossMelnykMiniMax
 	 */
 	private static int MaxValue(int[][] board, int cutoff, int playerID)
 	{
-		if(cutoff == 0)
+		List<Integer> actions = GroossMelnykHelperClass.Actions(board);
+
+		if(cutoff == 0 || actions.size() == 0)
 		{
 			return GroossMelnykHelperClass.Eval(board, player);
 		}
 
 		int v = Integer.MIN_VALUE;
 		int np = GroossMelnykHelperClass.NextPlayer(playerID);
-		
-		List<Integer> actions = GroossMelnykHelperClass.Actions(board);
-		
+
 		for(int a : actions)
 		{
 			v = Math.max(v, MinValue(GroossMelnykHelperClass.Result(board, a, playerID), cutoff - 1, np));
@@ -72,16 +72,17 @@ public class GroossMelnykMiniMax
 	 */
 	private static int MinValue(int[][] board, int cutoff, int playerID)
 	{
-		if(cutoff == 0)
+		List<Integer> actions = GroossMelnykHelperClass.Actions(board);
+
+		if(cutoff == 0 || actions.size() == 0)
 		{
 			return GroossMelnykHelperClass.Eval(board, player);
 		}
 
 		int v = Integer.MAX_VALUE;
 		int np = GroossMelnykHelperClass.NextPlayer(playerID);
-		
-		List<Integer> actions = GroossMelnykHelperClass.Actions(board);
-		
+
+
 		for(int a : actions)
 		{
 			v = Math.min(v, MaxValue(GroossMelnykHelperClass.Result(board, a, playerID), cutoff - 1, np));

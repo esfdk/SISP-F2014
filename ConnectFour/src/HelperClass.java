@@ -4,36 +4,35 @@ import java.util.List;
 public class HelperClass 
 {
 	private static int hThree = 9, hTwo = 3, hOne = 1;
+	private static int maxValue = 100000;
 	
 	private static int[][] singlePointGiven;
 
-	public static int Eval(int[][] board, int player)
+	public static int Eval(int[][] board, int playerID)
 	{		
-		for(int i = board[0].length - 1; i >= 0; i--)
-		{
-			for(int j = 0; j < board.length; j++)
-			{
-				System.out.print(board[j][i]);
-			}
-			System.out.print("\n");
-		}
+//		for(int i = board[0].length - 1; i >= 0; i--)
+//		{
+//			for(int j = 0; j < board.length; j++)
+//			{
+//				System.out.print(board[j][i]);
+//			}
+//			System.out.print("\n");
+//		}
 		
 		singlePointGiven = new int[board.length][board[0].length];
 
-		int eH = EvalHorizontal(board, player);
-		if (eH == Integer.MAX_VALUE - 1 || eH == Integer.MIN_VALUE + 1) return eH;
+		int eH = EvalHorizontal(board, playerID);
+		if (eH == maxValue || eH == -maxValue) return eH;
 
-		int eV = EvalVertical(board, player);
-		if (eV == Integer.MAX_VALUE - 1 || eV == Integer.MIN_VALUE + 1) return eV;
+		int eV = EvalVertical(board, playerID);
+		if (eV == maxValue || eV == -maxValue) return eV;
 
-		int eDL = EvalDiagonalLeft(board, player);
-		if (eDL == Integer.MAX_VALUE - 1 || eDL == Integer.MIN_VALUE + 1) return eDL;
+		int eDL = EvalDiagonalLeft(board, playerID);
+		if (eDL == maxValue || eDL == -maxValue) return eDL;
 
-		int eDR = EvalDiagonalRight(board, player);
-		if (eDR == Integer.MAX_VALUE - 1 || eDR == Integer.MIN_VALUE + 1) return eDR;
+		int eDR = EvalDiagonalRight(board, playerID);
+		if (eDR == maxValue || eDR == -maxValue) return eDR;
 
-		System.out.println(eH + " + " + eV + " + " + eDL + " + " + eDR + " = " + (eH + eV + eDL + eDR));
-		System.out.println();
 		return (eH + eV + eDL + eDR);
 	}
 
@@ -58,7 +57,8 @@ public class HelperClass
 									&& board[cols + 2][rows] == playerID
 									&& board[cols + 1][rows] == playerID)
 							{
-								return Integer.MAX_VALUE - 1;
+								return maxValue;
+//								return Integer.MAX_VALUE - 1;
 							}
 							else if (board[cols + 2][rows] == playerID
 									&& board[cols + 1][rows] == playerID)
@@ -97,7 +97,8 @@ public class HelperClass
 									&& board[cols + 2][rows] == nextPlayer
 									&& board[cols + 1][rows] == nextPlayer)
 							{
-								return Integer.MIN_VALUE + 1;
+								return -maxValue;
+//								return Integer.MIN_VALUE + 1;
 							}
 							else if (board[cols + 2][rows] == nextPlayer
 									&& board[cols + 1][rows] == nextPlayer)
@@ -156,7 +157,8 @@ public class HelperClass
 									&& board[cols][rows + 2] == playerID
 									&& board[cols][rows + 1] == playerID)
 							{
-								return Integer.MAX_VALUE - 1;
+								return maxValue;
+//								return Integer.MAX_VALUE - 1;
 							}
 							else if (board[cols][rows + 2] == playerID
 									&& board[cols][rows + 1] == playerID)
@@ -190,7 +192,8 @@ public class HelperClass
 									&& board[cols][rows + 2] == nextPlayer
 									&& board[cols][rows + 1] == nextPlayer)
 							{
-								return Integer.MIN_VALUE + 1;
+								return -maxValue;
+//								return Integer.MIN_VALUE + 1;
 							}
 							else if (board[cols][rows + 2] == nextPlayer
 									&& board[cols][rows + 1] == nextPlayer)
@@ -251,7 +254,8 @@ public class HelperClass
 									&& board[cols - 2][rows + 2] == playerID
 									&& board[cols - 1][rows + 1] == playerID)
 							{
-								return Integer.MAX_VALUE - 1;
+								return maxValue;
+//								return Integer.MAX_VALUE - 1;
 							}
 							else if (board[cols - 2][rows + 2] == playerID
 									&& board[cols - 1][rows + 1] == playerID)
@@ -286,7 +290,8 @@ public class HelperClass
 									&& board[cols - 2][rows + 2] == nextPlayer
 									&& board[cols - 1][rows + 1] == nextPlayer)
 							{
-								return Integer.MIN_VALUE + 1;
+								return -maxValue;
+//								return Integer.MIN_VALUE + 1;
 							}
 							else if (board[cols - 2][rows + 2] == nextPlayer
 									&& board[cols - 1][rows + 1] == nextPlayer)
@@ -348,7 +353,8 @@ public class HelperClass
 									&& board[cols + 2][rows + 2] == playerID
 									&& board[cols + 1][rows + 1] == playerID)
 							{
-								return Integer.MAX_VALUE - 1;
+								return maxValue;
+//								return Integer.MAX_VALUE - 1;
 							}
 							else if (board[cols + 2][rows + 2] == playerID
 									&& board[cols + 1][rows + 1] == playerID)
@@ -383,7 +389,8 @@ public class HelperClass
 									&& board[cols + 2][rows + 2] == nextPlayer
 									&& board[cols + 1][rows + 1] == nextPlayer)
 							{
-								return Integer.MIN_VALUE + 1;
+								return -maxValue;
+//								return Integer.MIN_VALUE + 1;
 							}
 							else if (board[cols + 2][rows + 2] == nextPlayer
 									&& board[cols + 1][rows + 1] == nextPlayer)
@@ -462,15 +469,30 @@ public class HelperClass
 	{
 		List<Integer> actions = new ArrayList<Integer>();
 
-		for(int i = 0; i < board.length; i++)
+		for(int col = 0; col < board.length; col++)
 		{
-			if(board[i][0] == 0)
+			int row = FindLowestEmptyRow(board, col);
+			if (row > board[col].length)
+				continue;
+				
+			if(board[col][row] == 0)
 			{
-				actions.add(i);
+				actions.add(col);
 			}
 		}
 
 		return actions;
+	}
+	
+	private static int FindLowestEmptyRow(int[][] board, int column)
+	{
+		for (int row = 0; row < board[column].length; row++)
+		{
+			if (board[column][row] == 0)
+				return row;
+		}
+		
+		return maxValue;
 	}
 
 	/**
@@ -526,5 +548,19 @@ public class HelperClass
 		case 2: return 1;
 		default: return 0;
 		}	
+	}
+	
+	
+	public static void PrintBoard(int[][] board)
+	{
+		for(int i = board[0].length - 1; i >= 0; i--)
+		{
+			for(int j = 0; j < board.length; j++)
+			{
+				System.out.print(board[j][i]);
+			}
+			System.out.print("\n");
+		}
+		System.out.println();
 	}
 }

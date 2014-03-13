@@ -18,14 +18,16 @@ public class MiniMax
 		
 		int decision = 0;
 		int decisionValue = Integer.MIN_VALUE;
-
-		for(int i = 0; i < board.length; i++)
+		
+		List<Integer> actions = HelperClass.Actions(board);
+		
+		for(int a : actions)
 		{
-			int tempValue = MinValue(HelperClass.Result(board, i, playerID), cutoff, HelperClass.NextPlayer(playerID));
-			if(tempValue >= decisionValue)
+			int tempValue = MinValue(HelperClass.Result(board, a, playerID), cutoff, HelperClass.NextPlayer(playerID));
+			if (tempValue >= decisionValue)
 			{
-				decision = i;
-				decisionValue = tempValue; 
+				decision = a;
+				decisionValue = tempValue;
 			}
 		}
 
@@ -79,12 +81,28 @@ public class MiniMax
 		int np = HelperClass.NextPlayer(playerID);
 		
 		List<Integer> actions = HelperClass.Actions(board);
-
+		
 		for(int a : actions)
 		{
 			v = Math.min(v, MaxValue(HelperClass.Result(board, a, playerID), cutoff - 1, np));
 		}
 
 		return v;
+	}
+	
+	private static int CountFilledPlaces(int[][] board)
+	{
+		int result = 0;
+
+		for(int i = board[0].length - 1; i >= 0; i--)
+		{
+			for(int j = 0; j < board.length; j++)
+			{
+				if (board[j][i] != 0)
+					result++;
+			}
+		}
+		
+		return result;
 	}
 }

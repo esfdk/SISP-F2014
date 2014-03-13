@@ -1,9 +1,9 @@
 \section{Conclusion}
 \label{Conclusion}
-We can conclude that the AI we have implemented plays intelligently and with a decent speed (not taking more than a few seconds to calculate its move). It choses it move based on how the board is and tries to minimize the possibility of its opponent winning. When it plays against itself, it exhibits the same behavior, making the game drag on for a while.
+We can conclude that the AI we have implemented plays somewhat intelligently (see Known Bugs) and with a decent speed (not taking more than a few seconds to calculate its move). It chooses its move based on the board state and tries to minimize the possibility of its opponent winning. When it plays against itself, it exhibits the same behaviour, making the game drag on for a while.
 
 \subsection{Known bugs}
-We have encountered one major bug with the AI. It plays smart, but it does not aim to win the game. Rather, it aims to prevent its opponent from winning, even  if it has access to one (or more) winning moves. 
+We have encountered one major bug with the AI. It plays smart, but it does not aim to win the game. Rather, it aims to prevent its opponent from winning, even if it has access to one (or more) winning moves. 
 
 \subsection{Improvements}
 As mentioned in section \ref{Cutoff} we could have improved the algorithm by implementing alpha-beta-pruning and iterative deepening to give the algorithm a more correct evaluation of the possible moves. If move ordering is implemented, alpha-beta-pruning can be highly effective and in combination with iterative deepening, the algorithm would be able to evaluate far more moves which in turn would improve the AI's decision making.

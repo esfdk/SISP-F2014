@@ -94,19 +94,6 @@ public class GameLogic implements IGameLogic
 
 	public int decideNextMove() 
 	{
-		// TODO: If trying to put into full column, then put into next available column
-		return MiniMax.MiniMaxDecision(board, cutoff, playerID);  
-
-		/*for (int j = 0; j < sizeX; j++) 
-		{
-			for (int i = 0; i < sizeY; i++) 
-			{
-				if (board[j][i] == 0) 
-				{
-					return j;
-				}
-			}
-		}
-		return 0;*/
+		return MiniMax.MiniMaxDecision(board, cutoff, playerID);
 	}
 }

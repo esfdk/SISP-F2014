@@ -89,20 +89,4 @@ public class MiniMax
 
 		return v;
 	}
-	
-	private static int CountFilledPlaces(int[][] board)
-	{
-		int result = 0;
-
-		for(int i = board[0].length - 1; i >= 0; i--)
-		{
-			for(int j = 0; j < board.length; j++)
-			{
-				if (board[j][i] != 0)
-					result++;
-			}
-		}
-		
-		return result;
-	}
 }

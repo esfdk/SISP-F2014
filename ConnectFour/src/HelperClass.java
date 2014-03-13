@@ -4,21 +4,19 @@ import java.util.List;
 public class HelperClass 
 {
 	private static int hThree = 9, hTwo = 3, hOne = 1;
-	private static int maxValue = 100000;
+	private static int maxValue = Integer.MAX_VALUE - 1;
 	
 	private static int[][] singlePointGiven;
 
+	/**
+	 * Evaluates the state of the board.
+	 * 
+	 * @param board The board to evaluate.
+	 * @param playerID The ID of the current player.
+	 * @return The value.
+	 */
 	public static int Eval(int[][] board, int playerID)
-	{		
-//		for(int i = board[0].length - 1; i >= 0; i--)
-//		{
-//			for(int j = 0; j < board.length; j++)
-//			{
-//				System.out.print(board[j][i]);
-//			}
-//			System.out.print("\n");
-//		}
-		
+	{
 		singlePointGiven = new int[board.length][board[0].length];
 
 		int eH = EvalHorizontal(board, playerID);
@@ -36,11 +34,19 @@ public class HelperClass
 		return (eH + eV + eDL + eDR);
 	}
 
+	/**
+	 * Calculates the horizontal values of the board.
+	 * 
+	 * @param board The board.
+	 * @param playerID The ID of the current player.
+	 * @return The total of the horizontal values of the board.
+	 */
 	private static int EvalHorizontal(int[][] board, int playerID)
 	{
 		int result = 0;
 		int nextPlayer = NextPlayer(playerID);
 
+		// Iterate over all spaces of the board.
 		for (int rows = 0; rows < board[0].length; rows++)
 		{
 			for (int cols = 0; cols < board.length; cols++)
@@ -48,7 +54,7 @@ public class HelperClass
 				int tempResult = 0;
 
 				if (board[cols][rows] == playerID)
-				{		
+				{ 
 					if (InsideBoardBounds(cols + 3, rows, board))
 					{
 						if (PossibleLine(cols, rows, 1, 0, board, playerID))
@@ -58,7 +64,6 @@ public class HelperClass
 									&& board[cols + 1][rows] == playerID)
 							{
 								return maxValue;
-//								return Integer.MAX_VALUE - 1;
 							}
 							else if (board[cols + 2][rows] == playerID
 									&& board[cols + 1][rows] == playerID)
@@ -98,7 +103,6 @@ public class HelperClass
 									&& board[cols + 1][rows] == nextPlayer)
 							{
 								return -maxValue;
-//								return Integer.MIN_VALUE + 1;
 							}
 							else if (board[cols + 2][rows] == nextPlayer
 									&& board[cols + 1][rows] == nextPlayer)
@@ -136,6 +140,13 @@ public class HelperClass
 		return result;
 	}
 
+	/**
+	 * Calculates the vertical values of the board.
+	 * 
+	 * @param board The board.
+	 * @param playerID The ID of the current player.
+	 * @return The total of the horizontal values of the board.
+	 */
 	private static int EvalVertical(int[][] board, int playerID)
 	{
 		int result = 0;
@@ -158,7 +169,6 @@ public class HelperClass
 									&& board[cols][rows + 1] == playerID)
 							{
 								return maxValue;
-//								return Integer.MAX_VALUE - 1;
 							}
 							else if (board[cols][rows + 2] == playerID
 									&& board[cols][rows + 1] == playerID)
@@ -193,7 +203,6 @@ public class HelperClass
 									&& board[cols][rows + 1] == nextPlayer)
 							{
 								return -maxValue;
-//								return Integer.MIN_VALUE + 1;
 							}
 							else if (board[cols][rows + 2] == nextPlayer
 									&& board[cols][rows + 1] == nextPlayer)
@@ -225,6 +234,13 @@ public class HelperClass
 		return result;
 	}
 
+	/**
+	 * Calculates the diagonal values of the board that goes left.
+	 * 
+	 * @param board The board.
+	 * @param playerID The ID of the current player.
+	 * @return The total of the horizontal values of the board.
+	 */
 	private static int EvalDiagonalLeft(int[][] board, int playerID)
 	{
 		int result = 0;
@@ -255,7 +271,6 @@ public class HelperClass
 									&& board[cols - 1][rows + 1] == playerID)
 							{
 								return maxValue;
-//								return Integer.MAX_VALUE - 1;
 							}
 							else if (board[cols - 2][rows + 2] == playerID
 									&& board[cols - 1][rows + 1] == playerID)
@@ -291,7 +306,6 @@ public class HelperClass
 									&& board[cols - 1][rows + 1] == nextPlayer)
 							{
 								return -maxValue;
-//								return Integer.MIN_VALUE + 1;
 							}
 							else if (board[cols - 2][rows + 2] == nextPlayer
 									&& board[cols - 1][rows + 1] == nextPlayer)
@@ -324,6 +338,13 @@ public class HelperClass
 		return result;
 	}
 
+	/**
+	 * Calculates the diagonal values of the board that goes right.
+	 * 
+	 * @param board The board.
+	 * @param playerID The ID of the current player.
+	 * @return The total of the horizontal values of the board.
+	 */
 	private static int EvalDiagonalRight(int[][] board, int playerID)
 	{
 		int result = 0;
@@ -354,7 +375,6 @@ public class HelperClass
 									&& board[cols + 1][rows + 1] == playerID)
 							{
 								return maxValue;
-//								return Integer.MAX_VALUE - 1;
 							}
 							else if (board[cols + 2][rows + 2] == playerID
 									&& board[cols + 1][rows + 1] == playerID)
@@ -390,7 +410,6 @@ public class HelperClass
 									&& board[cols + 1][rows + 1] == nextPlayer)
 							{
 								return -maxValue;
-//								return Integer.MIN_VALUE + 1;
 							}
 							else if (board[cols + 2][rows + 2] == nextPlayer
 									&& board[cols + 1][rows + 1] == nextPlayer)
@@ -484,6 +503,12 @@ public class HelperClass
 		return actions;
 	}
 	
+	/**
+	 * Finds the lowest empty row in the given column.
+	 * @param board The game board.
+	 * @param column The column to check.
+	 * @return The index of the lowest row.
+	 */
 	private static int FindLowestEmptyRow(int[][] board, int column)
 	{
 		for (int row = 0; row < board[column].length; row++)
@@ -548,19 +573,5 @@ public class HelperClass
 		case 2: return 1;
 		default: return 0;
 		}	
-	}
-	
-	
-	public static void PrintBoard(int[][] board)
-	{
-		for(int i = board[0].length - 1; i >= 0; i--)
-		{
-			for(int j = 0; j < board.length; j++)
-			{
-				System.out.print(board[j][i]);
-			}
-			System.out.print("\n");
-		}
-		System.out.println();
 	}
 }

@@ -46,7 +46,7 @@ public class GroossMelnykMiniMax
 	{
 		if(cutoff == 0)
 		{
-			return GroossMelnykHelperClass.Eval(board, player);
+			return GroossMelnykEvaluation.Eval(board, player);
 		}
 
 		int v = Integer.MIN_VALUE;
@@ -74,7 +74,7 @@ public class GroossMelnykMiniMax
 	{
 		if(cutoff == 0)
 		{
-			return GroossMelnykHelperClass.Eval(board, player);
+			return GroossMelnykEvaluation.Eval(board, player);
 		}
 
 		int v = Integer.MAX_VALUE;

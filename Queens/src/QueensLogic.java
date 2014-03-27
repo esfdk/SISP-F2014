@@ -59,15 +59,18 @@ public class QueensLogic
         
         for(int i = 0; i < x; i++)
         {
+        	BDD r = fact.zero();
+        	
         	for(int j = 0; j < y; j++)
         	{
-        		BuildBDD(i, j); 
+        		BuildBDD(i, j);
+        		
+        		BDD n = r.apply(BDDBoard[i][j], BDDFactory.or);
+        		r.orWith(n);
         	}
+        	
+        	overallBDD.andWith(r);
         }
-        
-        overallBDD.restrictWith(fact.ithVar(0).and(fact.ithVar(7)));
-     
-        System.out.println(overallBDD.satOne().toString());
 	}
     
     private void BuildBDD(int row, int col)

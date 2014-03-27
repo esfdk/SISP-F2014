@@ -28,6 +28,8 @@ public class BDDExamples {
 		// checks whether expression is tautology
 		System.out.println("b is tautology? : " + b.isOne());
 		
+		True.printDot();
+		False.printDot();
 		// In order to restrict or quantify the expression to a given assignment
 		// we give the assignment as a conjunction where positive variables
 		// indicate that the variable should be restricted to false, and vice versa.
@@ -37,10 +39,12 @@ public class BDDExamples {
 		BDD existed = b.exist(x_0);
 		
 		// Exist. should be tautology
-		System.out.println("Existiential quant. cause taut: " + existed.isOne());
+		//System.out.println("Existiential quant. cause taut: " + existed.isOne());
 		
 		// Restriction shoule be unsat:
-		System.out.println("Restriction caused unsat: " + restricted.isZero());
+		//System.out.println("Restriction caused unsat: " + restricted.isZero());
+		
+		//restricted.printSetWithDomains();
 		
 		// how to perform replacement
 		BDDPairing replacement = fact.makePair();

@@ -2,6 +2,7 @@ public class GroossMelnykEvaluation
 {
 	private static int hThree = 9, hTwo = 3, hOne = 1;
 	private static int maxValue = Integer.MAX_VALUE - 1;
+	private static int minValue = Integer.MIN_VALUE + 100;
 	
 	private static int[][] singlePointGiven;
 
@@ -99,7 +100,7 @@ public class GroossMelnykEvaluation
 									&& board[cols + 2][rows] == nextPlayer
 									&& board[cols + 1][rows] == nextPlayer)
 							{
-								return -maxValue;
+								return minValue;
 							}
 							else if (board[cols + 2][rows] == nextPlayer
 									&& board[cols + 1][rows] == nextPlayer)
@@ -199,7 +200,7 @@ public class GroossMelnykEvaluation
 									&& board[cols][rows + 2] == nextPlayer
 									&& board[cols][rows + 1] == nextPlayer)
 							{
-								return -maxValue;
+								return minValue;
 							}
 							else if (board[cols][rows + 2] == nextPlayer
 									&& board[cols][rows + 1] == nextPlayer)
@@ -302,7 +303,7 @@ public class GroossMelnykEvaluation
 									&& board[cols - 2][rows + 2] == nextPlayer
 									&& board[cols - 1][rows + 1] == nextPlayer)
 							{
-								return -maxValue;
+								return minValue;
 							}
 							else if (board[cols - 2][rows + 2] == nextPlayer
 									&& board[cols - 1][rows + 1] == nextPlayer)
@@ -406,7 +407,7 @@ public class GroossMelnykEvaluation
 									&& board[cols + 2][rows + 2] == nextPlayer
 									&& board[cols + 1][rows + 1] == nextPlayer)
 							{
-								return -maxValue;
+								return minValue;
 							}
 							else if (board[cols + 2][rows + 2] == nextPlayer
 									&& board[cols + 1][rows + 1] == nextPlayer)

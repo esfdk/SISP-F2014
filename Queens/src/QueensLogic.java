@@ -1,13 +1,12 @@
+import net.sf.javabdd.*;
+
 /**
  * This class implements the logic behind the BDD for the n-queens problem
  * You should implement all the missing methods
  * 
- * @author Stavros Amanatidis
+ * @author Stavros Amanatidis (with edits by Jacob Grooss (jcgr) & Jakob Melnyk (jmel))
  *
  */
-
-import net.sf.javabdd.*;
-
 public class QueensLogic 
 {
 	private int size = 0;
@@ -17,7 +16,6 @@ public class QueensLogic
 	private BDD[][] BDDBoard;
 	private BDDFactory fact;
 	private BDD overallBDD;
-
 
 	/**
 	 * The constructor.
@@ -86,7 +84,7 @@ public class QueensLogic
 		// Reset the BDD.
 		overallBDD = fact.one();
 
-		// Initialise each position in the BDDBoard.
+		// Initialize each position in the BDDBoard.
 		for(int col = 0; col < size; col++)
 			for(int row = 0; row < size; row++)
 				BDDBoard[col][row] = fact.ithVar(row + col * size);
@@ -168,7 +166,7 @@ public class QueensLogic
 	 }
 
 	 /**
-	  * Restricts the BDD with the queen's position from the gameboard.
+	  * Restricts the BDD with the queen's position from the game board.
 	  */
 	 private void restrictBDD()
 	 {

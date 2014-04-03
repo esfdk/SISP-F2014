@@ -5,7 +5,22 @@
 
 % init -> build BDD -> add rules -> insert queen -> restrict BDD -> get valid domains -> update board
 
+Our implementation uses two BDDs. One is the actual BDD used for decision-making. The other is a 2D BDD array (referred to as BDDBoard from now on) that corresponds to the game board and is used to make it easier to access the right positions in the decision-making BDD. It also has the benefit that it makes it easier to understand what happens in the code.
+
+Our implementation goes through three overall steps:
+\begin{my_enumerate}
+
+	\item The \textbf{initialization} step sets up the game board with the chosen board size and initializes the BDDBoard along with the BDDFactory.
+
+	\item The \textbf{build BDD} step builds the decision-making BDD and creates the rules to make the N-Queens problem solvable.
+
+	\item The \textbf{insert queen} step is repeating. It happens when the user attempts to place a queen on the board, and it checks if the position is valid. If it is, the BDD is used to update the game board to display restricted positions.
+
+\end{my_enumerate}
+
 \subsection{Building the BDD}
+
+When we build the BDD, we start with an empty BDD and an empty BDDBoard. We then iterate over every position on the BDDBoard and build the required rules for every position (see next section for the rules). For every column, we also apply the condition that it should have at least one queen for it to be a satisfiable solution.
 
 \subsection{Adding the rules for the problem}
 

@@ -76,11 +76,11 @@ public class QueensLogic
 	}
 
 	/**
-	 * Rebuilds the entire BDD.
+	 * Builds the entire BDD.
 	 */
 	private void buildBDD()
 	{
-		// Reset the BDD.
+		// Create an empty BDD.
 		overallBDD = fact.one();
 
 		// Initialize each position in the BDDBoard.
@@ -97,7 +97,7 @@ public class QueensLogic
 			{
 				buildBDDRules(col, row);
 
-				// Ensure that there at least a queen in each column in a satisfiable solution.
+				// Ensure that there is at least a queen in each column in a satisfiable solution.
 				BDD n = columnBDD.apply(BDDBoard[col][row], BDDFactory.or);
 				columnBDD.orWith(n);
 			}
@@ -116,7 +116,7 @@ public class QueensLogic
 	 {
 		 BDD vertical = fact.one(), horizontal = fact.one(), downRight = fact.one(), upRight = fact.one();
 
-		 // Vertical
+		 // Vertical rules
 		 for(int tempRow = 0; tempRow < size; tempRow++)
 		 {
 			 if (tempRow == row) continue;
@@ -125,7 +125,7 @@ public class QueensLogic
 			 vertical.andWith(n);
 		 }
 
-		 // Horizontal
+		 // Horizontal rules
 		 for(int tempRow = 0; tempRow < size; tempRow++)
 		 {
 			 if (tempRow == col) continue;
@@ -134,7 +134,7 @@ public class QueensLogic
 			 horizontal.andWith(n);
 		 }
 
-		 // Down-right
+		 // Down-right rules
 		 for(int tempRow = 0; tempRow < size; tempRow++)
 		 {
 			 int tempCol = (tempRow - col) + row;
@@ -146,7 +146,7 @@ public class QueensLogic
 			 downRight.andWith(n);
 		 }
 
-		 // Up-right
+		 // Up-right rules
 		 for(int tempRow = 0; tempRow < size; tempRow++)
 		 {
 			 int tempCol = (col + row) - tempRow;

@@ -189,7 +189,7 @@ public class QueensLogic
 	  */
 	 private int[][] updateBoard()
 	 {
-		 int[][] domains = getValidDomains();
+		 int[][] domains = getValidPositions();
 		 int[][] tempBoard = gameBoard;
 
 		 // "Closes" positions based on the valid domains.
@@ -208,13 +208,13 @@ public class QueensLogic
 	 }
 
 	 /**
-	  * Gets the domains that are still "open" according to the BDD.
+	  * Gets the positions that are still "open" according to the BDD.
 	  * 
 	  * @return an int[][] where 1 means the position is still open.
 	  */
-	 private int[][] getValidDomains() 
+	 private int[][] getValidPositions() 
 	 {
-		 int validDomains[][] = new int[size][size];
+		 int validPositions[][] = new int[size][size];
 
 		 // Checks each position.
 		 for (int col = 0; col < size; col++)
@@ -225,10 +225,10 @@ public class QueensLogic
 				 // we can place a queen on that position.
 				 BDD restricted = overallBDD.restrict(fact.ithVar(row + col * size));
 				 if (!restricted.isZero())
-					 validDomains[col][row] = 1;
+					 validPositions[col][row] = 1;
 			 }
 		 }
 
-		 return validDomains;
+		 return validPositions;
 	 }
 }

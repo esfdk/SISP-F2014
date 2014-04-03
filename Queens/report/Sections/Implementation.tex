@@ -11,4 +11,5 @@
 
 \subsection{Inserting a queen}
 
-\subsection{Getting the valid domains}
+\subsection{Getting the valid positions}
+We calculate the valid positions by iterating over every position on the board and attempting to place a queen on that position by restricting that position to true. If the restricted BDD is not zero (false), then that position is valid.

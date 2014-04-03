@@ -8,8 +8,14 @@
 \subsection{Building the BDD}
 
 \subsection{Adding the rules for the problem}
+We add the n-Queens rules to the BDD by iterating over all the positions in the BDDboard and constructing the rules for each position individually.
+
+The rules for each position is built by constructing a BDD for the column by applying "not and" to each other position in the same column. This process is repeated for the row, the down right diagonal line and the up right diagonal line. At the end they are combined with the overall BDD.
 
 \subsection{Inserting a queen}
+Whenever a queen is inserted, we restrict the overall BDD with the BDD of the position of the newly inserted queen being true. After we have restricted the overall BDD, we update the game board by getting the valid positions of the board (described below) and closing the positions that are not valid.
 
 \subsection{Getting the valid positions}
-We calculate the valid positions by iterating over every position on the board and attempting to place a queen on that position by restricting that position to true. If the restricted BDD is not zero (false), then that position is valid.
+A valid position on the board is a position that does not contain a queen and would not lead to a unsatisfiable solution if a queen was placed there.
+
+We calculate the valid positions of the board by iterating over every position on the board and attempting to place a queen on that position by restricting that position to true. If the restricted BDD is not zero (false), then that position is valid.

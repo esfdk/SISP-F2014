@@ -189,7 +189,7 @@ public class QueensLogic
 	  */
 	 private int[][] updateBoard()
 	 {
-		 int[][] domains = getValidPositions();
+		 int[][] validPositions = getValidPositions();
 		 int[][] tempBoard = gameBoard;
 
 		 // "Closes" positions based on the valid domains.
@@ -197,7 +197,7 @@ public class QueensLogic
 		 {
 			 for (int row = 0; row < size; row++)
 			 {
-				 if (domains[col][row] == 0)
+				 if (validPositions[col][row] == 0)
 				 {
 					 tempBoard[col][row] = -1;
 				 }

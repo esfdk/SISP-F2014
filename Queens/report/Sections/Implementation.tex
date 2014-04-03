@@ -1,20 +1,13 @@
 \section{Implementation}
 \label{Implementation}
-% 2d-array of BDDs
-% one overall BDD
+Our implementation of the n-queens configurator uses binary decision diagrams (BDDs). We have an overall BDD used for decision making and a 2D array of BDDs (the BDDBoard). The BDDBoard corresponds to the game board and is used to make it easier to access the correct positions in the decision-making BDD. It also has the benefit of making the code easier to understand.
 
-% init -> build BDD -> add rules -> insert queen -> restrict BDD -> get valid domains -> update board
-
-Our implementation uses two BDDs. One is the actual BDD used for decision-making. The other is a 2D BDD array (referred to as BDDBoard from now on) that corresponds to the game board and is used to make it easier to access the right positions in the decision-making BDD. It also has the benefit that it makes it easier to understand what happens in the code.
-
-Our implementation goes through three overall steps:
+Our implementation consists of two parts:
 \begin{my_enumerate}
 
-	\item The \textbf{initialization} step sets up the game board with the chosen board size and initializes the BDDBoard along with the BDDFactory.
+	\item The \textbf{initialization} parts which sets up the game board and initialises the BDDFactory and the BDDBoard by building the BDD and applying the rules of the N-queens problem.
 
-	\item The \textbf{build BDD} step builds the decision-making BDD and creates the rules to make the N-Queens problem solvable.
-
-	\item The \textbf{insert queen} step is repeating. It happens when the user attempts to place a queen on the board, and it checks if the position is valid. If it is, the BDD is used to update the game board to display restricted positions.
+	\item The \textbf{insert queen} part is a repeating step. It happens when the user attempts to place a queen on the board. If the move is valid, the BDD is used to update the game board to display invalid positions.
 
 \end{my_enumerate}
 

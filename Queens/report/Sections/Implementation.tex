@@ -5,7 +5,7 @@ Our implementation of the n-queens configurator uses binary decision diagrams (B
 Our implementation consists of two parts:
 \begin{my_enumerate}
 
-	\item The \textbf{initialization} parts which sets up the game board and initialises the BDDFactory and the BDDBoard by building the BDD and applying the rules of the N-queens problem.
+	\item The \textbf{initialization} part which sets up the game board and initialises the BDDFactory and the BDDBoard. The decision making BDD is built by applying the rules of the N-queens problem to the BDDBoard.
 
 	\item The \textbf{insert queen} part is a repeating step. It happens when the user attempts to place a queen on the board. If the move is valid, the BDD is used to update the game board to display invalid positions.
 
@@ -13,7 +13,7 @@ Our implementation consists of two parts:
 
 \subsection{Building the BDD}
 
-When we build the BDD, we start with an empty BDD and an empty BDDBoard. We then iterate over every position on the BDDBoard and build the required rules for every position (see next section for the rules). For every column, we also apply the condition that it should have at least one queen for it to be a satisfiable solution.
+When we build the overall BDD, we start with an empty BDD and an empty BDDBoard. We then iterate over every position on the BDDBoard and build the required rules for every position (see next section). For every column, we also apply the condition that it should have at least one queen for it to be a satisfiable solution.
 
 \subsection{Adding the rules for the problem}
 We add the n-Queens rules to the BDD by iterating over all the positions in the BDDboard and constructing the rules for each position individually.

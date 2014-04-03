@@ -40,7 +40,7 @@ public class QueensLogic
 		this.fact = JFactory.init(2000000, 200000);
 		fact.setVarNum(size * size);
 
-		rebuildBDD();
+		buildBDD();
 	}
 
 	/**
@@ -58,18 +58,17 @@ public class QueensLogic
 	 * 
 	 * @param column The column.
 	 * @param row The row.
-	 * @return true if the queen was placed.
+	 * @return true if the queen was placed, false if it was an illegal move.
 	 */
 	public boolean insertQueen(int column, int row) 
 	{
 		if (gameBoard[column][row] == -1 || gameBoard[column][row] == 1) 
 		{
-			return true;
+			return false;
 		}
 
 		gameBoard[column][row] = 1;
-
-		rebuildBDD();
+		
 		restrictBDD();
 		gameBoard = updateBoard();
 
@@ -79,7 +78,7 @@ public class QueensLogic
 	/**
 	 * Rebuilds the entire BDD.
 	 */
-	private void rebuildBDD()
+	private void buildBDD()
 	{
 		// Reset the BDD.
 		overallBDD = fact.one();
@@ -92,17 +91,18 @@ public class QueensLogic
 		// Build rules for every single position on the board.
 		for(int col = 0; col < size; col++)
 		{
-			BDD r = fact.zero();
+			BDD columnBDD = fact.zero();
 
 			for(int row = 0; row < size; row++)
 			{
 				buildBDDRules(col, row);
 
-				BDD n = r.apply(BDDBoard[col][row], BDDFactory.or);
-				r.orWith(n);
+				// Ensure that there at least a queen in each column in a satisfiable solution.
+				BDD n = columnBDD.apply(BDDBoard[col][row], BDDFactory.or);
+				columnBDD.orWith(n);
 			}
 
-			overallBDD.andWith(r);
+			overallBDD.andWith(columnBDD);
 		}
 	}
 
@@ -114,7 +114,7 @@ public class QueensLogic
 	 */
 	 private void buildBDDRules(int col, int row)
 	 {
-		 BDD a = fact.one(), b = fact.one(), c = fact.one(), d = fact.one();
+		 BDD vertical = fact.one(), horizontal = fact.one(), downRight = fact.one(), upRight = fact.one();
 
 		 // Vertical
 		 for(int tempRow = 0; tempRow < size; tempRow++)
@@ -122,7 +122,7 @@ public class QueensLogic
 			 if (tempRow == row) continue;
 
 			 BDD n = BDDBoard[col][row].apply(BDDBoard[col][tempRow], BDDFactory.nand);
-			 a.andWith(n);
+			 vertical.andWith(n);
 		 }
 
 		 // Horizontal
@@ -131,7 +131,7 @@ public class QueensLogic
 			 if (tempRow == col) continue;
 
 			 BDD n = BDDBoard[col][row].apply(BDDBoard[tempRow][row], BDDFactory.nand);
-			 b.andWith(n);
+			 horizontal.andWith(n);
 		 }
 
 		 // Down-right
@@ -143,7 +143,7 @@ public class QueensLogic
 			 if (tempRow == col && tempCol == row) continue;
 
 			 BDD n = BDDBoard[col][row].apply(BDDBoard[tempRow][tempCol], BDDFactory.nand);
-			 c.andWith(n);
+			 downRight.andWith(n);
 		 }
 
 		 // Up-right
@@ -155,14 +155,14 @@ public class QueensLogic
 			 if (tempRow == col && tempCol == row) continue;
 
 			 BDD n = BDDBoard[col][row].apply(BDDBoard[tempRow][tempCol], BDDFactory.nand);
-			 d.andWith(n);
+			 upRight.andWith(n);
 		 }
 
-		 c.andWith(d);
-		 b.andWith(c);
-		 a.andWith(b);
+		 downRight.andWith(upRight);
+		 horizontal.andWith(downRight);
+		 vertical.andWith(horizontal);
 
-		 overallBDD.andWith(a);
+		 overallBDD.andWith(vertical);
 	 }
 
 	 /**
@@ -221,7 +221,7 @@ public class QueensLogic
 		 {
 			 for (int row = 0; row < size; row++)
 			 {
-				 // If a the BDD can be restricted and is not unsatifiable,
+				 // If a the BDD can be restricted and is not unsatisfiable,
 				 // we can place a queen on that position.
 				 BDD restricted = overallBDD.restrict(fact.ithVar(row + col * size));
 				 if (!restricted.isZero())
